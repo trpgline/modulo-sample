@@ -32,11 +32,11 @@ export class Automation implements IAutomation {
    * @param input
    */
   step(input: Input): IAutomation {
-    this.transition = new Map<Input, IAutomation>([
-      ['0', this.zero()],
-      ['1', this.one()]
-    ]);
-    return this.transition.get(input);
+    if (this.transition.size === 0) {
+      this.transition.set('0', this.zero());
+      this.transition.set('1', this.one());
+    }
+    return this.transition.get(input) ?? this;
   }
 
   zero(): IAutomation {
